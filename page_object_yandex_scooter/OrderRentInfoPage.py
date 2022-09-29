@@ -26,10 +26,14 @@ class OrderRentInfoPage:
         self.driver.find_element(*self.comment).send_keys(comment)
         self.wait_for_finish_button_enabled()
         self.driver.find_element(*self.make_order_button).click()
+        self.wait_for_yes_button_enabled()
         self.driver.find_element(*self.yes_button).click()
 
     def wait_for_finish_button_enabled(self):
         WebDriverWait(self.driver, 3).until(expected_conditions.element_to_be_clickable(self.make_order_button))
+
+    def wait_for_yes_button_enabled(self):
+        WebDriverWait(self.driver, 3).until(expected_conditions.element_to_be_clickable(self.yes_button))
 
     def successful_order_screen_is_displayed(self):
         return self.driver.find_element(*self.successful_order_modal).is_displayed()
