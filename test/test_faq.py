@@ -19,7 +19,7 @@ class TestFAQHomePage:
         home_page = hps.HomePageScooter(driver)
         home_page.open_page(driver)
         home_page.wait_for_load_home_page()
-        driver.execute_script("window.scrollTo(0, 2800)")
+        home_page.scroll_to_element(question_selector)
         home_page.wait_for_load_home_page()
         home_page.open_question(question_selector)
         home_page.wait_for_load_home_page()

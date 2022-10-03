@@ -33,7 +33,7 @@ class HomePageScooter:
     last_element_scroll = [By.XPATH, '//*[@class="accordion__item"][8]']
     order_button_up = [By.CLASS_NAME, 'Button_Button__ra12g']
 
-    order_button_down = [By.XPATH, '//*[@class="Home_FinishButton__1_cWm"]/child::*']
+    order_button_down = '//*[@class="Home_FinishButton__1_cWm"]/child::*'
 
     scooter_logo = [By.XPATH, '//img[contains(@alt,"Scooter")]']
     yandex_logo = [By.XPATH, '//img[contains(@alt,"Yandex")]']
@@ -45,10 +45,11 @@ class HomePageScooter:
         driver.get("https://qa-scooter.praktikum-services.ru/")
 
     def open_question(self, selector):
+        WebDriverWait(self.driver, 5).until(expected_conditions.element_to_be_clickable([By.XPATH, selector]))
         self.driver.find_element(By.XPATH, selector).click()
 
     def get_answer(self, selector):
-        WebDriverWait(self.driver, 5)
+        WebDriverWait(self.driver, 5).until(expected_conditions.visibility_of_element_located([By.XPATH, selector]))
         return self.driver.find_element(By.XPATH, selector).is_displayed()
 
     def wait_for_load_home_page(self):
@@ -58,10 +59,15 @@ class HomePageScooter:
         self.driver.find_element(*self.order_button_up).click()
 
     def click_order_down_button(self):
-        self.driver.find_element(*self.order_button_down).click()
+        self.driver.find_element(By.XPATH, self.order_button_down).click()
 
     def click_scooter_logo(self):
         self.driver.find_element(*self.scooter_logo).click()
 
     def click_yandex_logo(self):
         self.driver.find_element(*self.yandex_logo).click()
+
+    def scroll_to_element(self, selector):
+        element = self.driver.find_element(By.XPATH, selector)
+        self.driver.execute_script("arguments[0].scrollIntoView();", element)
+        WebDriverWait(self.driver, 5).until(expected_conditions.element_to_be_clickable([By.XPATH, selector]))
