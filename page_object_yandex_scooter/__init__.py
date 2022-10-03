@@ -1,0 +1,2 @@
+class HomePageScooter:
+    pass
